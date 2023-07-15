@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Application.Features.Orders.Commands.Add
 {
-    public class OrderAddCommandHandler : IRequestHandler<OrderAddCommand, Response<int>>
+    public class OrderAddCommandHandler : IRequestHandler<OrderAddCommand, Response<Guid>>
     {
         private readonly IApplicationDbContext _applicationDbContext;
 
@@ -13,7 +13,7 @@ namespace Application.Features.Orders.Commands.Add
         {
             _applicationDbContext = applicationDbContext;
         }
-        public async Task<Response<int>> Handle(OrderAddCommand request, CancellationToken cancellationToken)
+        public async Task<Response<Guid>> Handle(OrderAddCommand request, CancellationToken cancellationToken)
         {
             var order = new Order
             {
@@ -29,7 +29,7 @@ namespace Application.Features.Orders.Commands.Add
 
             await _applicationDbContext.SaveChangesAsync(cancellationToken);
 
-            return new Response<int>($"The searched order was successfully added.");
+            return new Response<Guid>($"The searched order was successfully added.");
         }
     }
 }
