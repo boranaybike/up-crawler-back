@@ -93,9 +93,10 @@ app.UseHttpsRedirection();
 
 app.UseCors(builder =>
 {
-    builder.AllowAnyOrigin()
-           .AllowAnyMethod()
-           .AllowAnyHeader();
+    builder.AllowAnyMethod()
+           .AllowAnyHeader()
+            .AllowCredentials()
+            .WithOrigins("http://localhost:5173");
 });
 
 app.UseStaticFiles();

@@ -11,7 +11,7 @@ namespace WebApi.Hubs
     public class SeleniumLogHub:Hub
     {
         private ISender? _mediator; 
-        private readonly IHttpContextAccessor _contextAccessor;
+        private readonly IHttpContextAccessor _contextAccessor;        
 
         public SeleniumLogHub(IHttpContextAccessor contextAccessor)
         {
@@ -19,27 +19,31 @@ namespace WebApi.Hubs
         }
         public async Task SendLogNotificationAsync(SeleniumLogDto log)
         {
-           await Clients.AllExcept(Context.ConnectionId).SendAsync("NewSeleniumLogAdded", log);
+            await Clients.AllExcept(Context.ConnectionId).SendAsync("NewSeleniumLogAdded", log);
         }
 
-
-        protected ISender Mediator => _mediator ??= _contextAccessor.HttpContext.RequestServices.GetRequiredService<ISender>();
         public async Task SendProductAsync(ProductDto product)
         {
-           await Clients.AllExcept(Context.ConnectionId).SendAsync("NewProductAdded", product);
+            await Clients.AllExcept(Context.ConnectionId).SendAsync("NewProductAdded", product);
         }
-
-        public async Task<Guid> AddANewOrder(OrderAddCommand orderAddCommand)
+        public async Task ConsoleLogDeneme(string msg)
+        
+        {
+            Console.WriteLine("console deneme");
+           
+         }
+        protected ISender Mediator => _mediator ??= _contextAccessor.HttpContext.RequestServices.GetRequiredService<ISender>();
+        
+        [Authorize]
+        public async Task AddANewOrder(OrderAddCommand orderAddCommand)
         {
             var accessToken = Context.GetHttpContext().Request.Query["access_token"];
 
-            var result = await Mediator.Send(orderAddCommand);
+            var orderId = await Mediator.Send(orderAddCommand);
 
-            var accountGetById = await Mediator.Send(new OrderGetByIdQuery(result.Data));
+            var orderGetById = await Mediator.Send(new OrderGetByIdQuery(orderId.Data));
 
-            await Clients.All.SendAsync("NewOrderAdded", new CrawlerServiceNewOrderAddedDto(orderAddCommand, accessToken));
-
-            return result.Data;
+            await Clients.All.SendAsync("NewOrderAdded", new CrawlerServiceNewOrderAddedDto(orderGetById, accessToken));
 
         }
     }

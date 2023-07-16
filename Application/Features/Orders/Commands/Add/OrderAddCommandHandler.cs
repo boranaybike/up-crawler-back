@@ -1,6 +1,7 @@
 ﻿using Application.Common.Interfaces;
 using Domain.Common;
 using Domain.Entities;
+using Domain.Enums;
 using MediatR;
 
 namespace Application.Features.Orders.Commands.Add
@@ -17,11 +18,11 @@ namespace Application.Features.Orders.Commands.Add
         {
             var order = new Order
             {
-                Id = request.Id,
-                RequestedAmount = request.RequestedAmount,
-                TotalFoundAmount = request.TotalFoundAmount,
-                ProductCrawlType = request.ProductCrawlType,
-                OrderEvents = request.OrderEvents,
+                Id = Guid.NewGuid(),
+                RequestedAmount = (int)request.RequestedAmount,
+                //TotalFoundAmount = request.TotalFoundAmount,
+                ProductCrawlType = ProductCrawlType.All,
+                //OrderEvents = request.OrderEvents,
                 CreatedOn = new DateTimeOffset(DateTime.UtcNow),
             };
 
@@ -29,7 +30,7 @@ namespace Application.Features.Orders.Commands.Add
 
             await _applicationDbContext.SaveChangesAsync(cancellationToken);
 
-            return new Response<Guid>($"The searched order was successfully added.");
+            return new Response<Guid>(order.Id);
         }
     }
 }
