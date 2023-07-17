@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Application.Features.Products.Commands.Add
 {
-    public class ProductAddCommandHandler: IRequestHandler<ProductAddCommand, Response<int>>
+    public class ProductAddCommandHandler: IRequestHandler<ProductAddCommand, Response<Guid>>
     {
         private readonly IApplicationDbContext _applicationDbContext;
 
@@ -14,10 +14,11 @@ namespace Application.Features.Products.Commands.Add
             _applicationDbContext = applicationDbContext;
         }
 
-        public async Task<Response<int>> Handle(ProductAddCommand request, CancellationToken cancellationToken)
+        public async Task<Response<Guid>> Handle(ProductAddCommand request, CancellationToken cancellationToken)
         {
             var product = new Product
             {
+                Id = Guid.NewGuid(),
                 Name = request.Name,
                 Price = request.Price,
                 Picture = request.Picture,
@@ -30,9 +31,9 @@ namespace Application.Features.Products.Commands.Add
 
             await _applicationDbContext.SaveChangesAsync(cancellationToken);
 
-            return new Response<int>($"The searched product  was successfully added.");
+            return new Response<Guid>(product.Id);
         }
 
-       
+
     }
 }
