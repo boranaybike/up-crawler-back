@@ -103,6 +103,24 @@ namespace Infrastructure.Persistence.Migrations.Identity
                     b.ToTable("Products", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.SeleniumLog", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTimeOffset>("SentOn")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SeleniumLogs", (string)null);
+                });
+
             modelBuilder.Entity("Domain.Identity.Role", b =>
                 {
                     b.Property<string>("Id")

@@ -15,7 +15,6 @@ namespace Infrastructure.Persistence.Configurations
         {
             // Id
             builder.HasKey(x => x.Id);
-            // builder.Property(x => x.Id).ValueGeneratedOnAdd();
 
             // ProductCrawlType
             builder.Property(x => x.ProductCrawlType).IsRequired();

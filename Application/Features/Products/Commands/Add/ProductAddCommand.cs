@@ -1,10 +1,9 @@
-﻿using MediatR;
-using Domain.Common;
-using Domain.Entities;
+﻿using Domain.Common;
+using MediatR;
 
 namespace Application.Features.Products.Commands.Add
 {
- public class ProductAddCommand : IRequest<Response<Guid>>
+    public class ProductAddCommand : IRequest<Response<Guid>>
     {
         public Guid OrderId { get; set; }
 
