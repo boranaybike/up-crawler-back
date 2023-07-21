@@ -1,5 +1,4 @@
-﻿using Application.Common.Dtos;
-using Application.Common.Models.CrawlerService;
+﻿using Application.Common.Models.CrawlerService;
 using Application.Features.Orders.Commands.Add;
 using Application.Features.Orders.Commands.Queries;
 using Application.Features.Products.Commands.Add;

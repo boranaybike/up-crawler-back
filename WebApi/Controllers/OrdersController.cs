@@ -1,5 +1,5 @@
-﻿using Application.Common.Models.CrawlerService;
-using Application.Features.Orders.Commands.Add;
+﻿using Application.Features.Orders.Commands.Add;
+using Application.Features.Orders.Commands.Queries.GetAll;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -14,10 +14,11 @@ namespace WebApi.Controllers
             return Ok(await Mediator.Send(command));
         }
 
-        [HttpPost("AddOrder")]
-        public async Task<IActionResult> AddOrderAsync(CrawlerServiceNewOrderAddedDto newOrderAddedDto)
+        [HttpPost("GetAll")]
+        public async Task<IActionResult> GetAllAsync(OrderGetAllQuery query)
         {
-            return Ok();
+            return Ok(await Mediator.Send(query));
+
         }
     }
 }
