@@ -1,7 +1,6 @@
 ﻿using Application.Common.Interfaces;
 using Domain.Common;
 using Domain.Entities;
-using Domain.Enums;
 using MediatR;
 
 namespace Application.Features.Orders.Commands.Add
@@ -21,7 +20,7 @@ namespace Application.Features.Orders.Commands.Add
                 Id = Guid.NewGuid(),
                 RequestedAmount = (int)request.RequestedAmount,
                 //TotalFoundAmount = request.TotalFoundAmount,
-                ProductCrawlType = ProductCrawlType.All,
+                ProductCrawlType = request.ProductCrawlType,
                 //OrderEvents = request.OrderEvents,
                 CreatedOn = new DateTimeOffset(DateTime.UtcNow),
             };

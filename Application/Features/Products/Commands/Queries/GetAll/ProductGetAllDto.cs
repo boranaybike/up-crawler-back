@@ -1,10 +1,8 @@
-﻿using Domain.Common;
-using MediatR;
-
-namespace Application.Features.Products.Commands.Add
+﻿namespace Application.Features.Products.Commands.Queries.GetAll
 {
-    public class ProductAddCommand : IRequest<Response<Guid>>
+    public class ProductGetAllDto
     {
+        public Guid Id { get; set; }
         public Guid OrderId { get; set; }
 
         public string Name { get; set; }

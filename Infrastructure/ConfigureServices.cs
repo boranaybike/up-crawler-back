@@ -2,12 +2,10 @@
 using Domain.Identity;
 using Infrastructure.Persistence.Contexts;
 using Infrastructure.Services;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Data;
 
 namespace Infrastructure
 {

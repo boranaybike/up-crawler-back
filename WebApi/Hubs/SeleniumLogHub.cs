@@ -39,7 +39,7 @@ namespace WebApi.Hubs
         }
         protected ISender Mediator => _mediator ??= _contextAccessor.HttpContext.RequestServices.GetRequiredService<ISender>();
         
-        public async Task AddANewOrder(OrderAddCommand orderAddCommand)
+        public async Task<Guid> AddANewOrder(OrderAddCommand orderAddCommand)
         {
             var accessToken = Context.GetHttpContext().Request.Query["access_token"];
 
@@ -49,6 +49,7 @@ namespace WebApi.Hubs
 
             await Clients.All.SendAsync("NewOrderAdded", new CrawlerServiceNewOrderAddedDto(orderGetById, accessToken));
 
+            return orderId.Data;
         }
     }
 }

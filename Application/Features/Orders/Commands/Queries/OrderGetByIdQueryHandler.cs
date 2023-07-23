@@ -1,6 +1,5 @@
 ﻿using Application.Common.Interfaces;
 using Domain.Entities;
-using Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,7 +26,7 @@ namespace Application.Features.Orders.Commands.Queries
             {
                 Id = order.Id,
                 RequestedAmount = order.RequestedAmount,
-                ProductCrawlType = ProductCrawlType.All,
+                ProductCrawlType = order.ProductCrawlType,
                 CreatedOn = order.CreatedOn,
             };
         }

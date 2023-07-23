@@ -1,16 +1,14 @@
-﻿using Domain.Enums;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     public class Order
     {
         public Guid Id { get; set; }
         public int RequestedAmount { get; set; }
         public int TotalFoundAmount { get; set; }
-        public ProductCrawlType ProductCrawlType { get; set; }
-        public ICollection<OrderEvent>? OrderEvents { get; set; } // Bot started...
+        public string ProductCrawlType { get; set; }
         public DateTimeOffset CreatedOn { get; set; }
 
         public List<Product> Products { get; set; }
+        public List<SeleniumLog> SeleniumLogs { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Application.Features.Orders.Commands.Add;
+using Application.Features.Orders.Commands.Delete;
 using Application.Features.Orders.Commands.Queries.GetAll;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,12 @@ namespace WebApi.Controllers
         {
             return Ok(await Mediator.Send(query));
 
+        }
+
+        [HttpPost("Delete")]
+        public async Task<IActionResult> DeleteAsync(OrderDeleteCommand command)
+        {
+            return Ok(await Mediator.Send(command));
         }
     }
 }

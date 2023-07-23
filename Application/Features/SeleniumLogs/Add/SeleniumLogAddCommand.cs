@@ -7,6 +7,7 @@ namespace Application.Features.SeleniumLogs.Add
     {
         public string Message { get; set; }
         public DateTimeOffset SentOn { get; set; }
+        public Guid OrderId { get; set; }
 
     }
 }

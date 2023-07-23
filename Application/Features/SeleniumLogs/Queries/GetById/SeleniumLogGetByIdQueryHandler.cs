@@ -27,7 +27,8 @@ namespace Application.Features.SeleniumLogs.Queries.GetById
             {
                 Id = log.Id,
                 Message = log.Message,
-                SentOn = new DateTimeOffset(DateTime.UtcNow),
+                SentOn = log.SentOn,
+                OrderId = (Guid)log.OrderId,
 
             };
         }

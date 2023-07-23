@@ -1,8 +1,6 @@
 ﻿using Domain.Entities;
-using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
 
 namespace Infrastructure.Persistence.Configurations
 {
@@ -19,6 +17,9 @@ namespace Infrastructure.Persistence.Configurations
 
             // SentOn
             builder.Property(x => x.SentOn).IsRequired();
+
+            builder.HasOne(o => o.Order).WithMany(s => s.SeleniumLogs).HasForeignKey(o => o.OrderId);
+
 
             builder.ToTable("SeleniumLogs");
         }

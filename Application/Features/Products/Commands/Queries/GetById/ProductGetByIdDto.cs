@@ -11,8 +11,8 @@
 
         public bool IsOnSale { get; set; }
 
-        public decimal Price { get; set; }
+        public string Price { get; set; }
 
-        public decimal? SalePrice { get; set; }
+        public string? SalePrice { get; set; }
     }
 }

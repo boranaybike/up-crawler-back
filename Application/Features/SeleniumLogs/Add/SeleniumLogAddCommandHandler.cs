@@ -21,6 +21,8 @@ namespace Application.Features.SeleniumLogs.Add
                 Id = Guid.NewGuid(),
                 Message = request.Message,
                 SentOn = DateTime.UtcNow,
+                OrderId = (Guid)request.OrderId,
+
             };
 
             await _applicationDbContext.SeleniumLogs.AddAsync(log, cancellationToken);

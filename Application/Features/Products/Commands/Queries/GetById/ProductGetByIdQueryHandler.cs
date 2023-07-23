@@ -32,7 +32,6 @@ namespace Application.Features.Products.Commands.Queries.GetById
                 IsOnSale = product.IsOnSale,
                 Price = product.Price,
                 SalePrice = product.SalePrice
-
             };
         }
     }

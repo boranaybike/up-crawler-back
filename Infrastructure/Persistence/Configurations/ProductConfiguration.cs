@@ -25,11 +25,9 @@ namespace Infrastructure.Persistence.Configurations.Application
 
             // Price
             builder.Property(x => x.Price).IsRequired();
-            builder.Property(x => x.Price).HasColumnType("decimal(11,8)");
 
             // SalePrice
             builder.Property(x => x.SalePrice).IsRequired();
-            builder.Property(x => x.SalePrice).HasColumnType("decimal(11,8)");
 
             builder.HasOne(p => p.Order).WithMany(o => o.Products).HasForeignKey(p => p.OrderId);
 

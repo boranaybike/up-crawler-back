@@ -28,8 +28,9 @@ namespace Infrastructure.Persistence.Migrations.Identity
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("ProductCrawlType")
-                        .HasColumnType("int");
+                    b.Property<string>("ProductCrawlType")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<int>("RequestedAmount")
                         .HasColumnType("int");
@@ -40,28 +41,6 @@ namespace Infrastructure.Persistence.Migrations.Identity
                     b.HasKey("Id");
 
                     b.ToTable("Orders", (string)null);
-                });
-
-            modelBuilder.Entity("Domain.Entities.OrderEvent", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<Guid>("OrderId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("OrderEvents", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Product", b =>
@@ -87,12 +66,13 @@ namespace Infrastructure.Persistence.Migrations.Identity
                         .HasMaxLength(150)
                         .HasColumnType("varchar(150)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(11,8)");
-
-                    b.Property<decimal?>("SalePrice")
+                    b.Property<string>("Price")
                         .IsRequired()
-                        .HasColumnType("decimal(11,8)");
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("SalePrice")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -113,10 +93,16 @@ namespace Infrastructure.Persistence.Migrations.Identity
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<Guid?>("OrderId")
+                        .IsRequired()
+                        .HasColumnType("char(36)");
+
                     b.Property<DateTimeOffset>("SentOn")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
 
                     b.ToTable("SeleniumLogs", (string)null);
                 });
@@ -333,10 +319,10 @@ namespace Infrastructure.Persistence.Migrations.Identity
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.OrderEvent", b =>
+            modelBuilder.Entity("Domain.Entities.Product", b =>
                 {
                     b.HasOne("Domain.Entities.Order", "Order")
-                        .WithMany("OrderEvents")
+                        .WithMany("Products")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -344,10 +330,10 @@ namespace Infrastructure.Persistence.Migrations.Identity
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Product", b =>
+            modelBuilder.Entity("Domain.Entities.SeleniumLog", b =>
                 {
                     b.HasOne("Domain.Entities.Order", "Order")
-                        .WithMany("Products")
+                        .WithMany("SeleniumLogs")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -408,9 +394,9 @@ namespace Infrastructure.Persistence.Migrations.Identity
 
             modelBuilder.Entity("Domain.Entities.Order", b =>
                 {
-                    b.Navigation("OrderEvents");
-
                     b.Navigation("Products");
+
+                    b.Navigation("SeleniumLogs");
                 });
 #pragma warning restore 612, 618
         }

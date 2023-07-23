@@ -3,7 +3,6 @@ using Domain.Entities;
 using Infrastructure.Persistence.Configurations;
 using Infrastructure.Persistence.Configurations.Application;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 
 namespace Infrastructure.Persistence.Contexts
 {
@@ -12,7 +11,6 @@ namespace Infrastructure.Persistence.Contexts
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderEvent> OrderEvents { get; set; }
         public DbSet<SeleniumLog> SeleniumLogs { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
@@ -31,7 +29,6 @@ namespace Infrastructure.Persistence.Contexts
 
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
 
-            modelBuilder.ApplyConfiguration(new OrderEventConfiguration());
             modelBuilder.ApplyConfiguration(new SeleniumLogConfiguration());
 
             // Ignores

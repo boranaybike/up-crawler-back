@@ -1,6 +1,4 @@
-﻿using Domain.Common;
-using Domain.Entities;
-using MediatR;
+﻿using MediatR;
 
 namespace Application.Features.Orders.Commands.Queries
 {

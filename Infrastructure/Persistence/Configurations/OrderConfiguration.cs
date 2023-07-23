@@ -1,12 +1,6 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Infrastructure.Persistence.Configurations
 {
     public class OrderConfiguration : IEntityTypeConfiguration<Order>
@@ -27,11 +21,6 @@ namespace Infrastructure.Persistence.Configurations
 
             // TotalFoundAmount
             builder.Property(x => x.TotalFoundAmount).IsRequired();
-
-            // Relationships
-            builder.HasMany(x => x.OrderEvents)
-                .WithOne(x => x.Order)
-                .HasForeignKey(x => x.OrderId);
 
             builder.ToTable("Orders");
         }

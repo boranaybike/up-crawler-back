@@ -2,10 +2,6 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using Domain.Entities;
-using System.Diagnostics.Metrics;
-using System.Net;
-using System.Security.Principal;
 
 namespace Infrastructure.Persistence.Contexts
 {

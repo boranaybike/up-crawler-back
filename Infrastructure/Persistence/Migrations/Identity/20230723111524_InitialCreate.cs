@@ -86,27 +86,13 @@ namespace Infrastructure.Persistence.Migrations.Identity
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     RequestedAmount = table.Column<int>(type: "int", nullable: false),
                     TotalFoundAmount = table.Column<int>(type: "int", nullable: false),
-                    ProductCrawlType = table.Column<int>(type: "int", nullable: false),
+                    ProductCrawlType = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatedOn = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "SeleniumLogs",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Message = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    SentOn = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SeleniumLogs", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -238,27 +224,6 @@ namespace Infrastructure.Persistence.Migrations.Identity
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "OrderEvents",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    OrderId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    CreatedOn = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrderEvents", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_OrderEvents_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -269,14 +234,38 @@ namespace Infrastructure.Persistence.Migrations.Identity
                     Picture = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     IsOnSale = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(11,8)", nullable: false),
-                    SalePrice = table.Column<decimal>(type: "decimal(11,8)", nullable: false)
+                    Price = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    SalePrice = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Products_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "SeleniumLogs",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    OrderId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Message = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    SentOn = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SeleniumLogs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SeleniumLogs_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id",
@@ -322,11 +311,6 @@ namespace Infrastructure.Persistence.Migrations.Identity
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderEvents_OrderId",
-                table: "OrderEvents",
-                column: "OrderId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Products_Name",
                 table: "Products",
                 column: "Name");
@@ -334,6 +318,11 @@ namespace Infrastructure.Persistence.Migrations.Identity
             migrationBuilder.CreateIndex(
                 name: "IX_Products_OrderId",
                 table: "Products",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SeleniumLogs_OrderId",
+                table: "SeleniumLogs",
                 column: "OrderId");
         }
 
@@ -354,9 +343,6 @@ namespace Infrastructure.Persistence.Migrations.Identity
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
-
-            migrationBuilder.DropTable(
-                name: "OrderEvents");
 
             migrationBuilder.DropTable(
                 name: "Products");
